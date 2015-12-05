@@ -44,12 +44,11 @@ RUN ./configure --prefix=/usr/local/stow/libsodium-${LIBSODIUM_VER} &&\
 WORKDIR /tmp/build
 RUN rm -rf libsodium-${LIBSODIUM_VER} libsodium-${LIBSODIUM_VER}.tar.gz &&\ 
      pip install 'pip>=1.5.6' 'setuptools>=5.3' && hash pip && pip install 'pip>=1.5.6' 'setuptools>=5.3' tox &&\ 
-     rm -rf /usr/lib/python2.7/dist-packages/setuptools.egg-info &&\ 
-     mkdir /code
+     rm -rf /usr/lib/python2.7/dist-packages/setuptools.egg-info 
 
-WORKDIR /code
-RUN git clone https://github.com/nylas/sync-engine.git
-WORKDIR /code/sync-engine
+WORKDIR /opt
+RUN git clone https://github.com/nylas/sync-engine.git && rm -rf /opt/sync-engine/.git
+WORKDIR /opt/sync-engine
 RUN find . -name \*.pyc -delete &&\ 
     pip install -r requirements.txt && pip install -e . && \ 
     useradd inbox && \ 
@@ -59,9 +58,7 @@ ADD secrets.yml /etc/inboxapp/
 RUN chmod 0644 /etc/inboxapp/config.json && chmod 0600 /etc/inboxapp/secrets.yml && chown -R inbox /etc/inboxapp
 RUN apt-get -y autoremove && apt-get clean &&\ 
     mkdir -p /var/lib/inboxapp/parts && mkdir -p /var/log/inboxapp && chown inbox /var/log/inboxapp &&\ 
-    mkdir -p /opt/sync-engine && cp -R /code/sync-engine/bin /opt/sync-engine &&\  
-    cp /code/sync-engine/alembic.ini /opt/sync-engine/bin/alembic.ini &&\ 
-    cp -R /code/sync-engine/migrations /opt/sync-engine/bin/ && chown -R inbox /opt/sync-engine
+    chown -R inbox /opt/sync-engine
 USER inbox
-WORKDIR /opt/sync-engine/bin
+WORKDIR /opt/sync-engine/
 CMD /opt/sync-engine/bin/inbox-start
