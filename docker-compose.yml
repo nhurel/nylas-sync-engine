@@ -1,6 +1,7 @@
 sync-engine:
-  build: .
-  dockerfile: Dockerfile
+  #build: .
+  #dockerfile: Dockerfile
+  image: nhurel/nylas-sync-engine
   ports:
     - 5000:5000
   links:

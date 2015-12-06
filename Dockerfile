@@ -1,4 +1,4 @@
-FROM ubuntu:precise
+FROM nhurel/ubuntu-s6
 MAINTAINER nathan@hurel.me
 RUN apt-get update && apt-get -y install python-software-properties\ 
 		   git \
@@ -53,12 +53,17 @@ RUN find . -name \*.pyc -delete &&\
     pip install -r requirements.txt && pip install -e . && \ 
     useradd inbox && \ 
     mkdir -p /etc/inboxapp 
-ADD config.json /etc/inboxapp/
-ADD secrets.yml /etc/inboxapp/
-RUN chmod 0644 /etc/inboxapp/config.json && chmod 0600 /etc/inboxapp/secrets.yml && chown -R inbox /etc/inboxapp
+ADD config.json /etc/inboxapp/config-env.json
+ADD secrets.yml /etc/inboxapp/secrets-env.yml
+RUN chmod 0644 /etc/inboxapp/config-env.json && chmod 0600 /etc/inboxapp/secrets-env.yml && chown -R inbox:inbox /etc/inboxapp
 RUN apt-get -y autoremove && apt-get clean &&\ 
-    mkdir -p /var/lib/inboxapp/parts && mkdir -p /var/log/inboxapp && chown inbox /var/log/inboxapp &&\ 
-    chown -R inbox /opt/sync-engine
-USER inbox
+    mkdir -p /var/lib/inboxapp/parts && mkdir -p /var/log/inboxapp && chown inbox:inbox /var/log/inboxapp &&\ 
+    chown -R inbox:inbox /opt/sync-engine
+
+RUN mkdir -p /etc/s6/inbox-start && mkdir -p /etc/s6/inbox-api
+ADD s6-inbox-start.sh /etc/s6/inbox-start/run
+
+RUN chmod o+x /etc/s6/inbox-start/run
+
 WORKDIR /opt/sync-engine/
-CMD /opt/sync-engine/bin/inbox-start
+#CMD /opt/sync-engine/bin/inbox-start

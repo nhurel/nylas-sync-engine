@@ -2,7 +2,7 @@
 "DATABASE_HOSTS": [
     {
         "HOSTNAME": "mysql",
-        "PORT": 3306, 
+        "PORT": $MYSQL_PORT_3306_TCP_PORT,
         "SHARDS": [
             {
                 "ID": 0,
@@ -18,7 +18,7 @@
     },
     {
         "HOSTNAME": "mysql",
-        "PORT": 3306, 
+        "PORT": $MYSQL_PORT_3306_TCP_PORT, 
         "SHARDS": [
             {
                 "ID": 2,
