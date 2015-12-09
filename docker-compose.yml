@@ -1,13 +1,29 @@
 sync-engine:
-  #build: .
-  #dockerfile: Dockerfile
   image: nhurel/nylas-sync-engine
   ports:
-    - 5000:5000
+    - 5555:5555
   links:
     - mysql:mysql
+    - redis:redis
+  hostname: sync-engine
+  log_opt:
+    max-size: "10m"
+    max-file: "10"
 
 mysql:
   image: mysql
   environment:
     - MYSQL_ROOT_PASSWORD=root
+  volumes:
+    - nylas_mysql:/var/lib/mysql
+  log_opt:
+    max-size: "10m"
+    max-file: "10"
+
+redis:
+  image: redis
+  volumes:
+    - nylas_redis:/data
+  log_opt:
+    max-size: "10m"
+    max-file: "10"

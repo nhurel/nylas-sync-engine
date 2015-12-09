@@ -24,7 +24,8 @@ RUN apt-get update && apt-get -y install python-software-properties\
                    tmux \
                    curl \
                    tnef \
-                   stow
+                   stow \
+                   sudo
 
 RUN mkdir -p /tmp/build
 WORKDIR /tmp/build
@@ -58,12 +59,15 @@ ADD secrets.yml /etc/inboxapp/secrets-env.yml
 RUN chmod 0644 /etc/inboxapp/config-env.json && chmod 0600 /etc/inboxapp/secrets-env.yml && chown -R inbox:inbox /etc/inboxapp
 RUN apt-get -y autoremove && apt-get clean &&\ 
     mkdir -p /var/lib/inboxapp/parts && mkdir -p /var/log/inboxapp && chown inbox:inbox /var/log/inboxapp &&\ 
-    chown -R inbox:inbox /opt/sync-engine
+    chown -R inbox:inbox /var/lib/inboxapp && chown -R inbox:inbox /opt/sync-engine
 
 RUN mkdir -p /etc/s6/inbox-start && mkdir -p /etc/s6/inbox-api
 ADD s6-inbox-start.sh /etc/s6/inbox-start/run
+ADD s6-inbox-api.sh /etc/s6/inbox-api/run
 
-RUN chmod o+x /etc/s6/inbox-start/run
+RUN chmod o+x /etc/s6/inbox-start/run && chmod o+x /etc/s6/inbox-api/run &&\ 
+    ln -s /usr/bin/s6-finish /etc/s6/inbox-start/finish &&\ 
+    ln -s /usr/bin/s6-finish /etc/s6/inbox-api/finish  
 
 WORKDIR /opt/sync-engine/
-#CMD /opt/sync-engine/bin/inbox-start
+EXPOSE 5555

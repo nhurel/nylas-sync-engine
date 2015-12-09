@@ -43,7 +43,7 @@
 "LOGDIR": "/var/log/inboxapp",
 "LOGLEVEL": 10,
 
-"REDIS_HOSTNAME": "localhost",
+"REDIS_HOSTNAME": "redis",
 "REDIS_PORT": 6379,
 
 "BASE_ALIVE_THRESHOLD": 480,
