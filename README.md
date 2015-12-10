@@ -62,4 +62,4 @@ bin/inbox-auth your.address@gmail.com
 Follow the instruction and exit the container when done. You can curl the `/accounts` URL to check your account appears.
 
 # Getting your mail
-Unless you're running this sync engine on your personal computer, you'll have to rebuild the N1 package before installing it, to be able to configure your sync engine address. Guess what ? There's a docker image for that too !
+Unless you're running this sync engine on your personal computer, you'll have to rebuild the N1 package before installing it, to be able to configure your sync engine address. Guess what ? There's a docker image for that too: https://hub.docker.com/r/nhurel/nylas-n1-builder/ 
