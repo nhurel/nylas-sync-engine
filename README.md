@@ -57,8 +57,10 @@ exit
 Once your sync-engine container is up and running, you can add your first email account by logging in the container and running the account creation script. Assuming your container's name is still `nylas-sync-engine`, simply run :
 ```bash
 docker exec -it nylas-sync-engine bash
-bin/inbox-auth your.address@gmail.com
+sudo -uinbox bin/inbox-auth your.address@gmail.com
 ```
+Mind to run bin/inbox-auth as "inbox" user or command will fail telling to not run command as root.
+
 Follow the instruction and exit the container when done. You can curl the `/accounts` URL to check your account appears.
 
 ### Getting your mail
