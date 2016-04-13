@@ -52,7 +52,7 @@ RUN rm -rf libsodium-${LIBSODIUM_VER} libsodium-${LIBSODIUM_VER}.tar.gz &&\
 
 WORKDIR /opt
 #RUN git clone https://github.com/nylas/sync-engine.git && rm -rf /opt/sync-engine/.git
-ENV TAG=f54666160b677eefe640f9efd527c2d0768846b7
+ENV TAG=344402e2c66277b4b80c2d878a06344d9f5b97f8
 RUN curl -L -O https://github.com/nylas/sync-engine/archive/${TAG}.zip && unzip ${TAG}.zip && rm ${TAG}.zip && mv sync-engine-${TAG} sync-engine
 WORKDIR /opt/sync-engine
 RUN find . -name \*.pyc -delete &&\
