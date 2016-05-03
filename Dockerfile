@@ -28,7 +28,9 @@ RUN apt-get update && apt-get -y install python-software-properties\
                    sudo \
 		   lua5.2 \
 		   liblua5.2-dev \
-		   unzip
+		   unzip \
+    apt-get -y autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 RUN mkdir -p /tmp/build
 WORKDIR /tmp/build
@@ -52,7 +54,7 @@ RUN rm -rf libsodium-${LIBSODIUM_VER} libsodium-${LIBSODIUM_VER}.tar.gz &&\
 
 WORKDIR /opt
 #RUN git clone https://github.com/nylas/sync-engine.git && rm -rf /opt/sync-engine/.git
-ENV TAG=344402e2c66277b4b80c2d878a06344d9f5b97f8
+ENV TAG=3f508748e214794c3d6c480cc25d80810723c538
 RUN curl -L -O https://github.com/nylas/sync-engine/archive/${TAG}.zip && unzip ${TAG}.zip && rm ${TAG}.zip && mv sync-engine-${TAG} sync-engine
 WORKDIR /opt/sync-engine
 RUN find . -name \*.pyc -delete &&\
