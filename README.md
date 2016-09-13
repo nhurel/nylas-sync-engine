@@ -63,5 +63,18 @@ Mind to run bin/inbox-auth as "inbox" user or command will fail telling to not r
 
 Follow the instruction and exit the container when done. You can curl the `/accounts` URL to check your account appears.
 
-### Getting your mail
-Unless you're running this sync engine on your personal computer, you'll have to rebuild the N1 package before installing it, to be able to configure your sync engine address. Guess what ? There's a docker image for that too: https://hub.docker.com/r/nhurel/nylas-n1-builder/ 
+
+### Upgrading the engine
+To upgrade this container to a newer release, simply :
+- Stop current container with `docker-compose stop`
+- Pull a newer image
+  - If you don't know which tag you're currently running, run `docker pull nhurel/sync-engine`
+  - To download a specific tag, run somethinkg like `docker pull nhurel/sync-engine:0.4.51` and update the image in your `docker-compose.yml` file
+- Restart the app by runnng `docker-compose start`
+- Make sure the sync-engine database is up to date by running `docker exec nylas-sync-engine bin/migrate-db`
+
+The last step will execute only one database schema change at a time. Repeat this step until it logs `Relative revision +1 didn't produce 1 migrations`.
+
+**WARNING : The upgrade scripts sometimes fail and you have to manually manage the database migration.**
+
+
