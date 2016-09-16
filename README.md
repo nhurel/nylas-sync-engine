@@ -68,7 +68,7 @@ Follow the instruction and exit the container when done. You can curl the `/acco
 To upgrade this container to a newer release, simply :
 - Stop current container with `docker-compose stop`
 - Pull a newer image
-  - If you don't know which tag you're currently running, run `docker pull nhurel/sync-engine`
+  - If you don't know which tag you're currently running, run `docker pull nhurel/nylas-sync-engine`
   - To download a specific tag, run somethinkg like `docker pull nhurel/sync-engine:0.4.51` and update the image in your `docker-compose.yml` file
 - Restart the app by runnng `docker-compose start`
 - Make sure the sync-engine database is up to date by running `docker exec nylas-sync-engine bin/migrate-db`
