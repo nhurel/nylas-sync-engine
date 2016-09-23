@@ -14,6 +14,8 @@ sync-engine:
   image: nhurel/nylas-sync-engine
   ports:
     - 5555:5555
+  volumes:
+    - nylas_part:/var/lib/inboxapp
   links:
     - mysql:mysql
     - redis:redis

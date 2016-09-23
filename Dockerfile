@@ -77,4 +77,5 @@ RUN chmod o+x /etc/s6/inbox-start/run && chmod o+x /etc/s6/inbox-api/run &&\
     ln -s /usr/bin/s6-finish /etc/s6/inbox-api/finish
 
 WORKDIR /opt/sync-engine/
+VOLUME /var/lib/inboxapp
 EXPOSE 5555
