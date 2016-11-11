@@ -47,7 +47,19 @@ redis:
 #### Important
 The sync engine uses its own hostname when saving data in the database and queries only datas matching its hostname. So, in order to be able to remove and recreate your container you **must** specify the hostname to the container. This is done by the docker-compose.yml file given or by using the `--hostname` parameter from the command line
 
-### Database initialisation
+### First run
+To prevent issues with database creation, it's recommended to start the mysql container first with :
+```
+docker-compose up -d mysql
+```
+
+Wait a few sec before starting the other containers with :
+```
+docker-compose up -d
+```
+Once the dtabase has been correctly initialised, further stop and start of the sync-engine can be done with the single `docker-compose stop/up -d` command to start the whole thing at once.
+
+#### Database initialisation
 At startup, the container should initialise nylas database. If it fails, you can log in the container and run the database initialisation script. Assuming your container's name is `nylas-sync-engine`, simply run :
 ```bash
 docker exec -it nylas-sync-engine bash
