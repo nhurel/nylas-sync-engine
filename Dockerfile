@@ -14,6 +14,7 @@ RUN apt-get update && apt-get -y install python-software-properties\
                    libmysqlclient-dev \
                    gcc \
                    g++ \
+                   language-pack-en \
                    libzmq-dev \
                    libxml2-dev \
                    libxslt-dev \
@@ -49,12 +50,12 @@ RUN ./configure --prefix=/usr/local/stow/libsodium-${LIBSODIUM_VER} &&\
                   ldconfig
 WORKDIR /tmp/build
 RUN rm -rf libsodium-${LIBSODIUM_VER} libsodium-${LIBSODIUM_VER}.tar.gz &&\
-     pip install 'pip>=1.5.6' 'setuptools>=5.3' && hash pip && pip install 'pip>=1.5.6' 'setuptools>=5.3' tox &&\
-     rm -rf /usr/lib/python2.7/dist-packages/setuptools.egg-info
-
+     pip install 'pip==8.1.2' 'setuptools>=5.3' && hash pip && pip install 'pip==8.1.2' 'setuptools>=5.3' tox &&\
+     rm -rf /usr/lib/python2.7/dist-packages/setuptools.egg-info 
 WORKDIR /opt
-#RUN git clone https://github.com/nylas/sync-engine.git && rm -rf /opt/sync-engine/.git
-ENV TAG=60d8f1de4630c51c5fe208b620274c6df2e0a6f9
+ENV LC_ALL=en_US.UTF-8
+ENV LANF=en_US.UTF-8
+ENV TAG=17.1.6
 RUN curl -L -O https://github.com/nylas/sync-engine/archive/${TAG}.zip && unzip ${TAG}.zip && rm ${TAG}.zip && mv sync-engine-${TAG} sync-engine
 WORKDIR /opt/sync-engine
 RUN find . -name \*.pyc -delete &&\
