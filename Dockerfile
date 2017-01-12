@@ -80,3 +80,4 @@ RUN chmod o+x /etc/s6/inbox-start/run && chmod o+x /etc/s6/inbox-api/run &&\
 WORKDIR /opt/sync-engine/
 VOLUME /var/lib/inboxapp
 EXPOSE 5555
+ENV PYTHONPATH=/opt/sync-engine
